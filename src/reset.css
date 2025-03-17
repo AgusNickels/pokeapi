@@ -10,4 +10,6 @@ body{
   background-color: #1e1e1e;
   color: #fff;
   min-height: 100vh;
+  padding-inline: 14%;
+  padding-block: 2rem;
 }
