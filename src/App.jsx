@@ -1,6 +1,6 @@
 import { Searcher } from './components/Searcher';
 import { ListPokemon} from './components/ListPokemon';
-import { Pokemon } from './components/Pokemon';
+import './style.css';
 function App() {
 
   return (

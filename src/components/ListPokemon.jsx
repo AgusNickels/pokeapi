@@ -1,40 +1,40 @@
 import { useState, useEffect } from 'react';
 
 export function ListPokemon() {
+    
     const [data, setData] = useState({});
-    const [offset, setOffset] = useState(0); // Definir offset
 
-    const API_URL = `https://pokeapi.co/api/v2/pokemon?offset=${offset}`;
+    let offset = 40;
+    const API_URL = "https://pokeapi.co/api/v2/pokemon?offset=" + offset;
 
     let CallAPI = async () => {
-        try {
-            let response = await fetch(API_URL);
-            let previousData = await response.json();
-            
-            setData(previousData);
-            console.log(previousData);
-        } catch (error) {
-            console.error("Error al obtener los datos:", error);
+        let response = await fetch(API_URL);
+        let previousData = await response.json();;
+        
+        setData(previousData);
+}
+
+useEffect (() => {
+    CallAPI();
+}, []);
+
+return(
+    <section id="list">
+    { Object.keys(data).length > 0 &&
+        data.results.map((pkmon, i) => {
+
+            let id = offset + 1 + i;
+            let idstr = id.toString().padStart(3, '0');
+
+            let img = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/detail/" + idstr + ".png";
+
+            return(
+                <div key={pkmon.name}>
+                    <img sytle={{widt:400}} src={img}/>
+                    <p>{idstr}: {pkmon.name}</p>
+                </div>
+            )})
         }
-    };
-
-    useEffect(() => {
-        CallAPI();
-    }, [offset]); 
-
-    return (
-        <>
-            {data.results && data.results.length > 0 && 
-                data.results.map((pkmon, i) => {
-                    let id = offset + i + 1;
-
-                    return (
-                        <div key={pkmon.name}>
-                            <p>{pkmon.name}</p>
-                        </div>
-                    );
-                })
-            }
-        </>
-    );
+        </section>
+    )
 }
